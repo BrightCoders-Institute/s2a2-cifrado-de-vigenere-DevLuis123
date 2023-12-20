@@ -1,13 +1,43 @@
 
-class ClassName
-    def initialize(alphabet)
+class Encryption
+    def initialize(alphabet, string, string2)
         @alphabet = alphabet
+        @string = string
+        @string2 = string2
+        @vector_one = []
+        @vector_two = []
     end
-    def find_letter
 
+    def find_firstvalue
+        @string.each_char do |char|
+            @valor = @alphabet.to_h[char]
+            @vector_one<<@valor
+        end
+        print @vector_one,"\n"
     end
+    
+    def find_secondvalue 
+        @string2.each_char do |char|
+        @valor2 = @alphabet.to_h[char]
+        @vector_two<<@valor2
+        end
+    end 
+
+    def aling_vector
+        if (@vector_one.length < @vector_two.length)
+            @size1 = @vector_one.length
+            @vector_newtwo = @vector_two.slice(0,@size1)
+        else
+            
+        end
+        print @vector_newtwo,"\n"
+    end
+
+    def print_results;
+        
+    end
+
 end
-@valor = 0
 
 alphabet = {
     "A"=>0, "B"=>1, "C"=>2, "D"=>3, "E"=>4,
@@ -19,16 +49,13 @@ alphabet = {
 
 
 
-print "Ingrese una palabra:"
+print "Ingrese el mensaje original:"
     string = gets.chomp.upcase
 
-string.each_char do |char|
-    @valor = alphabet.to_h[char]
-    puts @valor
-end
+print "Ingrese clave de cifrado:"
+    string2 = gets.chomp.upcase
 
-sum = @valor + @valor
-    puts sum
-
-
-
+case_one = Encryption.new(alphabet, string, string2)
+case_one.find_firstvalue
+case_one.find_secondvalue
+case_one.aling_vector
