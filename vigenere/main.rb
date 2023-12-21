@@ -1,7 +1,7 @@
 
 class Encryption
-    def initialize(string, string2)
-        @alphabet = Hash[('A'..'Z').zip(0..26)]
+    def initialize(alphabet, string, string2)
+        @alphabet = alphabet
         @string = string
         @string2 = string2
         @vector_one = []
@@ -28,28 +28,52 @@ class Encryption
             @size1 = @vector_one.length
             @vector_newtwo = @vector_two.slice(0,@size1)
         else
-
+            @vector_newtwo = @vector_two.cycle.take(@vector_one.length)
         end
     end
 
     def sum_values
-        for i in (0...@vector_one.length) do
-            indx = @vector_one[i] + @vector_newtwo[i] 
-            @vector_sum<<indx
+        if (@vector_one.length < @vector_two.length)
+            for i in (0...@vector_one.length) do
+                indx = @vector_one[i] + @vector_newtwo[i] 
+                @vector_sum<<indx
+            end
+        else
+            for i in (0...@vector_one.length) do
+                indx = @vector_one[i] + @vector_newtwo[i] 
+                @vector_sum<<indx
+            end
         end
+        print @vector_sum,"\n"
     end
+
     def find_encrypt 
         inverted_alphabet = @alphabet.invert
-        ciphertext=""
+        ciphertext=" "
         @vector_sum.each do |num|
             letter=inverted_alphabet[num]
             ciphertext << letter
         end
         puts "The encrypted message is: #{ciphertext}"
     end
+
+    def uso 
+        find_firstvalue
+        find_secondvalue
+        aling_vector
+        sum_values
+        #! find_encrypt
+    end
 end
 
-
+alphabet = {
+    "A"=>0, "B"=>1, "C"=>2, "D"=>3, "E"=>4,
+    "F"=>5, "G"=>6, "H"=>7, "I"=>8, "J"=>9,
+    "K"=>10, "L"=>11, "M"=>12, "N"=>13,
+    "Ñ"=>14, "O"=>15, "P"=>16, "Q"=>17,
+    "R"=>18, "S"=>19, "T"=>20, "U"=>21,
+    "V"=>22, "W"=>23, "X"=>24, "Y"=>25, "Z"=>26
+}
 
 print "Type the original message:"
     string = gets.chomp.upcase
@@ -57,9 +81,5 @@ print "Type the original message:"
 print "Type the encryption key:"
     string2 = gets.chomp.upcase
 
-case_one = Encryption.new(string, string2)
-case_one.find_firstvalue
-case_one.find_secondvalue
-case_one.aling_vector
-case_one.sum_values
-case_one.find_encrypt
+case_one = Encryption.new(alphabet, string, string2)
+case_one.uso
